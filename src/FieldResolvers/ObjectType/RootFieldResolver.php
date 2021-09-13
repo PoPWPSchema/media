@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PoPWPSchema\Media\FieldResolvers;
+namespace PoPWPSchema\Media\FieldResolvers\ObjectType;
 
-use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
+use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableFieldResolver;
 use PoP\ComponentModel\HelperServices\SemverHelperServiceInterface;
 use PoP\ComponentModel\Instances\InstanceManagerInterface;
 use PoP\ComponentModel\Schema\FieldQueryInterpreterInterface;
