@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace PoPWPSchema\Media\FieldResolvers\ObjectType;
 
-use Symfony\Contracts\Service\Attribute\Required;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\Engine\CMS\CMSHelperServiceInterface;
 use PoP\Engine\Formatters\DateFormatterInterface;
 use PoPSchema\Media\TypeResolvers\ObjectType\MediaObjectTypeResolver;
 use PoPSchema\QueriedObject\FieldResolvers\InterfaceType\QueryableInterfaceTypeFieldResolver;
+use Symfony\Contracts\Service\Attribute\Required;
 use WP_Post;
 
 class MediaObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolver
@@ -55,12 +55,12 @@ class MediaObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResol
 
     public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
-        $descriptions = [
+        return match ($fieldName) {
             'url' => $this->translationAPI->__('Media element URL', 'pop-media'),
             'urlPath' => $this->translationAPI->__('Media element URL path', 'pop-media'),
             'slug' => $this->translationAPI->__('Media element slug', 'pop-media'),
-        ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
+            default => parent::getSchemaFieldDescription($objectTypeResolver, $fieldName),
+        };
     }
 
     /**
