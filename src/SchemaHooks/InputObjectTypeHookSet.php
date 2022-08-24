@@ -25,6 +25,7 @@ class InputObjectTypeHookSet extends AbstractHookSet
     }
     final protected function getStringScalarTypeResolver(): StringScalarTypeResolver
     {
+        /** @var StringScalarTypeResolver */
         return $this->stringScalarTypeResolver ??= $this->instanceManager->getInstance(StringScalarTypeResolver::class);
     }
     final public function setSlugFilterInput(SlugFilterInput $slugFilterInput): void
@@ -33,6 +34,7 @@ class InputObjectTypeHookSet extends AbstractHookSet
     }
     final protected function getSlugFilterInput(): SlugFilterInput
     {
+        /** @var SlugFilterInput */
         return $this->slugFilterInput ??= $this->instanceManager->getInstance(SlugFilterInput::class);
     }
 
@@ -59,7 +61,8 @@ class InputObjectTypeHookSet extends AbstractHookSet
     }
 
     /**
-     * @param array<string, InputTypeResolverInterface> $inputFieldNameTypeResolvers
+     * @param array<string,InputTypeResolverInterface> $inputFieldNameTypeResolvers
+     * @return array<string,InputTypeResolverInterface>
      */
     public function getInputFieldNameTypeResolvers(
         array $inputFieldNameTypeResolvers,

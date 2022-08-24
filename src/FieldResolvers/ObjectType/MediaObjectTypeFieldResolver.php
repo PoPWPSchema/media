@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PoPWPSchema\Media\FieldResolvers\ObjectType;
 
+use PoP\ComponentModel\FieldResolvers\InterfaceType\InterfaceTypeFieldResolverInterface;
 use PoP\ComponentModel\QueryResolution\FieldDataAccessorInterface;
 use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractObjectTypeFieldResolver;
@@ -26,6 +27,7 @@ class MediaObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
     }
     final protected function getCMSHelperService(): CMSHelperServiceInterface
     {
+        /** @var CMSHelperServiceInterface */
         return $this->cmsHelperService ??= $this->instanceManager->getInstance(CMSHelperServiceInterface::class);
     }
     final public function setDateFormatter(DateFormatterInterface $dateFormatter): void
@@ -34,6 +36,7 @@ class MediaObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
     }
     final protected function getDateFormatter(): DateFormatterInterface
     {
+        /** @var DateFormatterInterface */
         return $this->dateFormatter ??= $this->instanceManager->getInstance(DateFormatterInterface::class);
     }
     final public function setQueryableInterfaceTypeFieldResolver(QueryableInterfaceTypeFieldResolver $queryableInterfaceTypeFieldResolver): void
@@ -42,9 +45,13 @@ class MediaObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
     }
     final protected function getQueryableInterfaceTypeFieldResolver(): QueryableInterfaceTypeFieldResolver
     {
+        /** @var QueryableInterfaceTypeFieldResolver */
         return $this->queryableInterfaceTypeFieldResolver ??= $this->instanceManager->getInstance(QueryableInterfaceTypeFieldResolver::class);
     }
 
+    /**
+     * @return array<class-string<ObjectTypeResolverInterface>>
+     */
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [
@@ -52,6 +59,9 @@ class MediaObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
         ];
     }
 
+    /**
+     * @return array<InterfaceTypeFieldResolverInterface>
+     */
     public function getImplementedInterfaceTypeFieldResolvers(): array
     {
         return [
@@ -59,6 +69,9 @@ class MediaObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function getFieldNamesToResolve(): array
     {
         return [
@@ -90,6 +103,9 @@ class MediaObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
             case 'url':
             case 'urlAbsolutePath':
                 $url = \get_permalink($mediaItem->ID);
+                if ($url === false) {
+                    return '';
+                }
                 if ($fieldDataAccessor->getFieldName() === 'url') {
                     return $url;
                 }
